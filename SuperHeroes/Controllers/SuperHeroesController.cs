@@ -10,7 +10,7 @@ namespace SuperHeroes.Controllers
     public class SuperHeroesController : Controller
     {
         // GET: SuperHeroes
-        ApplicationDbContext  context;
+        ApplicationDbContext context;
 
         public SuperHeroesController()
         {
@@ -19,13 +19,15 @@ namespace SuperHeroes.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(context.SuperHeroes.ToList());
         }
 
         // GET: SuperHeroes/Details/5
-        public ActionResult Details()//int id))
+        public ActionResult Details(int id)
         {
-            return View(context.SuperHeroes.ToList());
+            var detailHeroes = context.SuperHeroes.Where(x => x.ID == id).FirstOrDefault();
+
+            return View(detailHeroes);
         }
 
         // GET: SuperHeroes/Create
@@ -58,7 +60,7 @@ namespace SuperHeroes.Controllers
         public ActionResult Edit(int id)
         {
             var heroEdit = context.SuperHeroes.Where(x => x.ID == id).FirstOrDefault();
-            
+
             return View(heroEdit);
         }
 
