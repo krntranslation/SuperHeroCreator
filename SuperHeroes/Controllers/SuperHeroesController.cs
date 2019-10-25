@@ -57,17 +57,25 @@ namespace SuperHeroes.Controllers
         // GET: SuperHeroes/Edit/5
         public ActionResult Edit(int id)
         {
-            SuperHeroesClass superHeroes = new SuperHeroesClass();
-            return View(superHeroes);
+            var heroEdit = context.SuperHeroes.Where(x => x.ID == id).FirstOrDefault();
+            
+            return View(heroEdit);
         }
 
         // POST: SuperHeroes/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, SuperHeroesClass superHeroesClass)
+        public ActionResult Edit(int id, SuperHeroesClass superHeroes)
         {
             try
             {
-                // TODO: Add update logic here
+                var heroEdit = context.SuperHeroes.Where(x => x.ID == id).FirstOrDefault();
+                heroEdit.ID = superHeroes.ID;
+                heroEdit.Name = superHeroes.Name;
+                heroEdit.PrimaryAbility = superHeroes.PrimaryAbility;
+                heroEdit.SecondaryAbility = superHeroes.SecondaryAbility;
+                heroEdit.CatchPhrase = superHeroes.CatchPhrase;
+
+                context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
